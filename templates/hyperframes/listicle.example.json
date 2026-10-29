@@ -9,72 +9,89 @@
   "items": [
     {
       "label": "orbit",
-      "demo": "assets/demo-01.jpg"
+      "demo": "assets/demo-01.jpg",
+      "during": "orbit"
     },
     {
       "label": "couch wall",
-      "demo": "assets/demo-02.jpg"
+      "demo": "assets/demo-02.jpg",
+      "during": "couch-wall"
     },
     {
       "label": "ui world",
-      "demo": "assets/demo-03.jpg"
+      "demo": "assets/demo-03.jpg",
+      "during": "ui-world"
     },
     {
       "label": "frame break",
-      "demo": "assets/demo-04.jpg"
+      "demo": "assets/demo-04.jpg",
+      "during": "frame-break"
     },
     {
       "label": "digital zoom",
-      "demo": "assets/demo-05.jpg"
+      "demo": "assets/demo-05.jpg",
+      "during": "digital-zoom"
     },
     {
       "label": "phone mockup",
-      "demo": "assets/demo-06.jpg"
+      "demo": "assets/demo-06.jpg",
+      "during": "phone-mockup"
     },
     {
       "label": "checklist",
-      "demo": "assets/demo-07.jpg"
+      "demo": "assets/demo-07.jpg",
+      "during": "checklist"
     },
     {
       "label": "headline wall",
-      "demo": "assets/demo-08.jpg"
+      "demo": "assets/demo-08.jpg",
+      "during": "headline-wall"
     },
     {
       "label": "zoom-through cut",
-      "demo": "assets/demo-09.jpg"
+      "demo": "assets/demo-09.jpg",
+      "during": "zoom-through"
     },
     {
       "label": "chart grow",
-      "demo": "assets/demo-10.jpg"
+      "demo": "assets/demo-10.jpg",
+      "during": "chart-grow"
     },
     {
       "label": "pull-back reveal",
-      "demo": "assets/demo-11.jpg"
+      "demo": "assets/demo-11.jpg",
+      "during": "pull-back"
     },
     {
       "label": "green screen",
-      "demo": "assets/demo-12.jpg"
+      "demo": "assets/demo-12.jpg",
+      "during": "green-screen"
     },
     {
       "label": "paper cut",
-      "demo": "assets/demo-13.jpg"
+      "demo": "assets/demo-13.jpg",
+      "during": "paper-cut"
     },
     {
       "label": "doodle boil",
       "demo": "assets/demo-14.jpg",
-      "match": "doodle"
+      "match": "doodle",
+      "during": "doodle-boil"
     },
     {
       "label": "vertigo",
-      "demo": "assets/demo-15.jpg"
+      "demo": "assets/demo-15.jpg",
+      "during": "vertigo"
     },
     {
       "label": "cover story",
-      "demo": "assets/demo-16.jpg"
+      "demo": "assets/demo-16.jpg",
+      "during": "cover-story"
     },
     {
       "label": "glass type",
-      "demo": "assets/demo-17.jpg"
+      "demo": "assets/demo-17.jpg",
+      "during": "glass-type"
     }
   ]
 }

@@ -7,8 +7,10 @@ mục đang nói đổi màu nhấn, và một khung điện thoại đặt trê
     python3 scripts/hf_listicle.py config.json --out projects/demo/hf
     python3 scripts/hf_listicle.py config.json --transcript ref/transcript.json --out ...
 
-`--transcript` (transcript.json của vkit) tự điền mốc `at` cho từng mục bằng cách tìm từ đầu tiên
-của nhãn (hoặc trường `match`) trong lời thoại, theo thứ tự.
+Mốc `at` của từng mục lấy theo một trong hai cách:
+  --timing t.json      (khuyên dùng) timing.json của `vscript align`: mục có `during` = tên Selection
+                       trong kịch bản sẽ hiện đúng khoảng của Selection đó.
+  --transcript t.json  transcript.json của vkit: tìm từ đầu tiên của nhãn (hoặc `match`) theo thứ tự.
 
 Mọi phần tử có thời gian đều được viết tĩnh trong HTML (class="clip", data-start, data-duration)
 để chỉnh được trong HyperFrames Studio. Sau khi sinh: copy A-roll và ảnh demo vào assets/, rồi
@@ -45,6 +47,19 @@ def fill_times(items: list[dict], transcript: Path) -> None:
             raise SystemExit(f"không tìm thấy '{key}' trong lời thoại — thêm 'at' hoặc 'match' cho mục này")
         it["at"] = words[i]["start"]
         i += 1
+
+
+def fill_from_timing(cfg: dict, timing: Path) -> None:
+    sel = json.loads(timing.read_text())["selections"]
+    for it in cfg["items"]:
+        name = it.get("during")
+        if name and "at" not in it:
+            if name not in sel:
+                raise SystemExit(f"không có Selection '{name}' trong {timing}")
+            it["at"] = sel[name]["start"]
+    ends = [sel[it["during"]]["end"] for it in cfg["items"] if it.get("during") in sel]
+    if ends and "list_end" not in cfg:
+        cfg["list_end"] = round(max(ends), 2)
 
 
 def fmt(t: float) -> str:
@@ -184,11 +199,14 @@ def build_index(cfg: dict) -> str:
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("config")
+    p.add_argument("--timing", help="timing.json của vscript align (dùng trường during của từng mục)")
     p.add_argument("--transcript", help="transcript.json để tự điền mốc thời gian")
     p.add_argument("--out", required=True)
     a = p.parse_args()
 
     cfg = json.loads(Path(a.config).read_text())
+    if a.timing:
+        fill_from_timing(cfg, Path(a.timing))
     if a.transcript:
         fill_times(cfg["items"], Path(a.transcript))
     missing = [it["label"] for it in cfg["items"] if "at" not in it]

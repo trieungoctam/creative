@@ -1,0 +1,251 @@
+# Danh mục model cho vgen / vaudio.
+#
+# NGUYÊN TẮC: ưu tiên nhà cung cấp CHÍNH CHỦ chất lượng cao (OpenAI, BytePlus/Seedance, ElevenLabs...);
+# fal.ai là tuyến dự phòng khi chưa có key chính chủ. Trong production.toml hãy ghi model LOGIC
+# (bảng [prefer] bên dưới); vgen tự chọn tuyến đầu tiên mà bạn đã có key.
+
+[prefer]
+gpt-image      = ["openai-image", "gpt-image-2"]                    # OpenAI → fal
+gpt-image-edit = ["openai-image", "gpt-image-2-edit"]               # OpenAI images/edits nhận nhiều ảnh tham chiếu
+gpt-image-fast = ["openai-image-fast", "gpt-image-2"]
+seedance       = ["seedance-2-byteplus", "seedance-2"]              # BytePlus ModelArk → fal
+seedance-t2v   = ["seedance-2-byteplus", "seedance-2-t2v"]
+nano-banana    = ["nano-banana-pro"]
+nano-banana-edit = ["nano-banana-pro-edit"]
+kling          = ["kling-3", "kling-app"]
+veo            = ["veo-3-1"]
+# Không có Sora: OpenAI đã tắt Sora 2 / Videos API từ 24/09/2026.
+
+# Mỗi tuyến là một bảng [models.<alias>]:
+# provider = "openai"   OpenAI Images API (OPENAI_API_KEY)
+# provider = "byteplus" BytePlus ModelArk — Seedance chính chủ (ARK_API_KEY)
+# provider = "fal"      fal.ai queue API (FAL_KEY) — một key cho rất nhiều model
+# provider = "manual"  không gọi API: vgen viết "thẻ prompt" để dán vào web/app (Higgsfield,
+#                      Midjourney, Kling app, Hailuo, CapCut...), rồi bạn thả file kết quả vào assets/
+#
+# `verified` = ngày đã đối chiếu endpoint và tên tham số với trang API của fal. ID và tham số đổi
+# rất nhanh: model chưa có `verified` cần kiểm tra trên fal.ai/models/<endpoint>/api trước khi chạy.
+#
+# inputs.<khóa của vgen> = "<tên field trong API>"
+#   prompt · image (ảnh đầu / ảnh tham chiếu) · end_image (khung cuối) · images (danh sách tham chiếu)
+#   aspect · duration · resolution · audio
+# aspect_map: đổi "9:16" của kit sang giá trị model nhận (khi model không dùng chuỗi tỉ lệ)
+# duration_format: "{}" → "8" ; "{}s" → "8s"
+# duration_range = [min, max] (giây, liên tục) hoặc durations = [4, 6, 8] (giá trị rời); độ dài được làm tròn LÊN giá trị hợp lệ
+
+# ----------------------------------------------------------------------------- ẢNH · chính chủ
+[models.openai-image]
+provider = "openai"
+model_id = "gpt-image-2.5-sunburst"
+type = "image"
+verified = "2026-10-29"
+# kích thước tùy ý: bội số của 16, cạnh dài ≤ 3840, tổng 0,65–8,3 MP
+size_map = { "9:16" = "1088x1920", "16:9" = "1920x1088", "1:1" = "1536x1536", "4:3" = "1536x1152", "3:4" = "1152x1536", "4:5" = "1232x1536", "2:3" = "1024x1536" }
+defaults = { quality = "high", n = 1, output_format = "png" }
+strengths = "OpenAI chính chủ, bản ưu tiên độ chính xác khi chỉnh sửa; chân dung kiểu điện thoại rất thật, chữ/UI chuẩn; images/edits nhận nhiều ảnh tham chiếu."
+tips = "Cấu trúc Capture / Person / Shot / Setting (docs/02). Kiểm tra model khả dụng: GET /v1/models."
+
+[models.openai-image-fast]
+provider = "openai"
+model_id = "gpt-image-2.5-flare"
+type = "image"
+verified = "2026-10-29"
+size_map = { "9:16" = "1088x1920", "16:9" = "1920x1088", "1:1" = "1024x1024", "4:3" = "1536x1152", "3:4" = "1152x1536", "2:3" = "1024x1536" }
+defaults = { quality = "medium", n = 1, output_format = "png" }
+strengths = "OpenAI, bản nhanh cho phác thảo, thử casting, biến thể số lượng lớn."
+tips = "Dùng để chạy vòng biến thể 1–2 (docs/02), chốt bằng bản sunburst."
+
+# ----------------------------------------------------------------------------- ẢNH · qua fal
+[models.nano-banana-pro]
+provider = "fal"
+endpoint = "fal-ai/nano-banana-pro"
+type = "image"
+verified = "2026-10-29"
+inputs = { prompt = "prompt", aspect = "aspect_ratio", resolution = "resolution" }
+defaults = { resolution = "2K", num_images = 1, output_format = "png" }
+output = "images"
+strengths = "Hiểu ngữ cảnh tốt, chữ trên ảnh khá chuẩn, chỉnh sửa theo hội thoại, nhiều tỉ lệ (tới 8:1)."
+tips = "Viết như mô tả một bức ảnh hoàn chỉnh; chỉ rõ vai trò từng ảnh tham chiếu. Ảnh tham chiếu dùng bản /edit."
+
+[models.nano-banana-pro-edit]
+provider = "fal"
+endpoint = "fal-ai/nano-banana-pro/edit"
+type = "image"
+# endpoint /edit được trang chính liên kết tới nhưng schema chưa đối chiếu: kiểm tra trước khi chạy
+inputs = { prompt = "prompt", images = "image_urls", aspect = "aspect_ratio", resolution = "resolution" }
+defaults = { resolution = "2K", num_images = 1 }
+output = "images"
+strengths = "Giữ danh tính / sản phẩm từ ảnh tham chiếu, thay đồ, đổi bối cảnh, tạo góc nhìn mới cùng thế giới."
+tips = "Mở đầu: 'Ảnh 1 = danh tính, ảnh 2 = sản phẩm'. Nói rõ phần GIỮ và phần ĐỔI."
+
+[models.gpt-image-2]
+provider = "fal"
+endpoint = "openai/gpt-image-2"
+type = "image"
+verified = "2026-10-29"
+inputs = { prompt = "prompt", aspect = "image_size" }
+aspect_map = { "9:16" = "portrait_16_9", "16:9" = "landscape_16_9", "3:4" = "portrait_4_3", "4:3" = "landscape_4_3", "1:1" = "square_hd" }
+defaults = { quality = "high", num_images = 1, output_format = "png" }
+output = "images"
+strengths = "Chân dung kiểu quay điện thoại rất thật (hypit dùng làm mặc định cho A-roll), casting mạnh, UI/màn hình giả lập."
+tips = "Dùng cấu trúc Capture / Person / Shot / Setting (docs/02). 'girl/boy + tuổi trưởng thành cụ thể' cho gương mặt cuốn hút."
+
+[models.gpt-image-2-edit]
+provider = "fal"
+endpoint = "openai/gpt-image-2/edit"
+type = "image"
+# chưa đối chiếu schema edit
+inputs = { prompt = "prompt", images = "image_urls", aspect = "image_size" }
+aspect_map = { "9:16" = "portrait_16_9", "16:9" = "landscape_16_9", "3:4" = "portrait_4_3", "4:3" = "landscape_4_3", "1:1" = "square_hd" }
+defaults = { quality = "high", num_images = 1 }
+output = "images"
+strengths = "Như gpt-image-2 nhưng nhận ảnh tham chiếu: nhân vật mới cùng quán, cầm sản phẩm thật."
+tips = "Tham chiếu gần nhất 'biết' sự thật cần giữ (cây tham chiếu docs/05)."
+
+# ----------------------------------------------------------------------------- VIDEO · chính chủ
+[models.seedance-2-byteplus]
+provider = "byteplus"
+model_id = "dreamina-seedance-2-0-260128"
+base_url = "https://ark.ap-southeast.bytepluses.com/api/v3"
+type = "video"
+# model_id lấy từ hướng dẫn DataCamp (2026); xác nhận trong ModelArk console → Model list trước khi chạy
+duration_range = [4, 15]
+defaults = { resolution = "720p", generate_audio = true, watermark = false }
+strengths = "Seedance 2.0 chính chủ (ByteDance): khung đầu/cuối, tối đa 9 ảnh + 3 video + 3 audio tham chiếu (omni), 480p–4K, âm thanh gốc."
+tips = "image = khung đầu, end_image = khung cuối, refs = ảnh tham chiếu (nhân vật, sản phẩm), ref_videos = URL video chuyển động mẫu."
+
+# ----------------------------------------------------------------------------- VIDEO · qua fal
+[models.seedance-2]
+provider = "fal"
+endpoint = "bytedance/seedance-2.0/image-to-video"
+type = "video"
+verified = "2026-10-29"
+duration_range = [4, 15]
+inputs = { prompt = "prompt", image = "image_url", end_image = "end_image_url", aspect = "aspect_ratio", duration = "duration", resolution = "resolution", audio = "generate_audio" }
+duration_format = "{}"
+defaults = { resolution = "720p", generate_audio = true }
+output = "video"
+strengths = "Diễn xuất talking-head, nhịp jump cut, âm thanh gốc; 4–15s; có khung cuối. Mặc định tốt cho A-roll UGC."
+tips = "Câu đầu = thái độ của người diễn; 1–2 chỗ nhấn nhìn thấy được; thoại đặt trong ngoặc kép (docs/03)."
+
+[models.seedance-2-t2v]
+provider = "fal"
+endpoint = "bytedance/seedance-2.0/text-to-video"
+type = "video"
+duration_range = [4, 15]
+inputs = { prompt = "prompt", aspect = "aspect_ratio", duration = "duration", resolution = "resolution", audio = "generate_audio" }
+duration_format = "{}"
+defaults = { resolution = "720p", generate_audio = true }
+output = "video"
+strengths = "Text → video khi không cần giữ danh tính."
+tips = "Chỉ dùng khi thế giới và hành động không phụ thuộc ảnh có sẵn."
+
+[models.kling-3]
+provider = "fal"
+endpoint = "fal-ai/kling-video/o3/standard/image-to-video"
+type = "video"
+verified = "2026-10-29"
+duration_range = [3, 15]
+inputs = { prompt = "prompt", image = "image_url", end_image = "end_image_url", duration = "duration", audio = "generate_audio" }
+duration_format = "{}"
+defaults = { generate_audio = false }
+output = "video"
+strengths = "Chuyển động cơ thể và máy quay mượt, vật lý tốt; 3–15s; có multi_prompt nhiều shot."
+tips = "Tả chuyển động máy rõ ràng (dolly in, orbit, handheld). Tỉ lệ khung lấy theo ảnh đầu vào."
+
+[models.veo-3-1]
+provider = "fal"
+endpoint = "fal-ai/veo3.1/image-to-video"
+type = "video"
+verified = "2026-10-29"
+durations = [4, 6, 8]
+# trang fal ghi endpoint này sẽ ngừng ngày 17/11/2026 — kiểm tra endpoint thay thế
+inputs = { prompt = "prompt", image = "image_url", aspect = "aspect_ratio", duration = "duration", resolution = "resolution", audio = "generate_audio" }
+duration_format = "{}s"
+defaults = { resolution = "720p", generate_audio = true }
+output = "video"
+strengths = "Chất điện ảnh, ánh sáng đẹp, âm thanh/thoại gốc tốt; 4/6/8s; chỉ 16:9 hoặc 9:16."
+tips = "Ảnh đầu ≥720p đúng 9:16. Mô tả âm thanh mong muốn (tiếng phòng, SFX) trong prompt."
+
+[models.veo-3-1-t2v]
+provider = "fal"
+endpoint = "fal-ai/veo3.1"
+type = "video"
+durations = [4, 6, 8]
+inputs = { prompt = "prompt", aspect = "aspect_ratio", duration = "duration", resolution = "resolution", audio = "generate_audio" }
+duration_format = "{}s"
+defaults = { resolution = "720p", generate_audio = true }
+output = "video"
+strengths = "Text → video điện ảnh."
+tips = ""
+
+# ----------------------------------------------------------------------------- ÂM THANH · ElevenLabs (vaudio.py)
+# Đổi model trong production.toml: [audio] tts_model = "eleven_v3" ...
+[models.eleven-v4]
+provider = "elevenlabs"
+model_id = "eleven_v4"
+type = "tts"
+verified = "2026-10-29"
+strengths = "Chất lượng cao nhất, 90+ ngôn ngữ CÓ tiếng Việt; trả mốc từng ký tự → neo kịch bản không cần Whisper."
+tips = "Mặc định của vaudio tts. eleven_multilingual_v2 KHÔNG hỗ trợ tiếng Việt."
+
+[models.eleven-v3]
+provider = "elevenlabs"
+model_id = "eleven_v3"
+type = "tts"
+verified = "2026-10-29"
+strengths = "Biểu cảm, kịch tính, hội thoại nhiều vai; 70+ ngôn ngữ có tiếng Việt."
+tips = "Hợp UGC nhiều cảm xúc, podcast giả, phim ngắn."
+
+[models.eleven-flash]
+provider = "elevenlabs"
+model_id = "eleven_flash_v2_5"
+type = "tts"
+verified = "2026-10-29"
+strengths = "Nhanh, rẻ, 32 ngôn ngữ có tiếng Việt — cho nháp và số lượng lớn."
+tips = ""
+
+[models.eleven-sfx]
+provider = "elevenlabs"
+model_id = "eleven_text_to_sound_v2"
+type = "sfx"
+verified = "2026-10-29"
+strengths = "Hiệu ứng âm thanh từ mô tả, 0,5–30s, có chế độ loop."
+tips = "Mô tả nguồn âm + chất liệu + không gian: 'soft paper whoosh, close mic, dry'."
+
+[models.eleven-music]
+provider = "elevenlabs"
+model_id = "music_v1"
+type = "music"
+verified = "2026-10-29"
+strengths = "Nhạc nền theo mô tả, 3s–10 phút, có chế độ chỉ nhạc không lời; cũng có music_v2 / music_v2_5."
+tips = "Ghi BPM, thể loại, nhạc cụ, cảm xúc, 'no vocals'."
+
+# ----------------------------------------------------------------------------- THỦ CÔNG (web/app)
+[models.higgsfield]
+provider = "manual"
+type = "any"
+url = "https://higgsfield.ai"
+strengths = "Một chỗ nhiều model (Seedance, Kling, Veo, Sora, Nano Banana), Soul ID giữ nhân vật, Cinema Studio cho chuyển động máy, Genjutsu chuyển chuyển động từ video mẫu."
+tips = "Có MCP cho Claude (mcp.higgsfield.ai/mcp) nhưng tiêu credit; chế độ unlimited chỉ có trên web."
+
+[models.midjourney]
+provider = "manual"
+type = "image"
+url = "https://www.midjourney.com"
+strengths = "Thẩm mỹ, moodboard, style reference (--sref), character reference (--cref/omni)."
+tips = "Tham số tỉ lệ: --ar 9:16. Dùng ảnh hero để chốt gu trước khi chuyển sang model khác."
+
+[models.kling-app]
+provider = "manual"
+type = "video"
+url = "https://klingai.com"
+strengths = "Motion brush, khung đầu–cuối, Elements (nhiều tham chiếu) trên giao diện web."
+tips = ""
+
+[models.capcut]
+provider = "manual"
+type = "edit"
+url = "https://www.capcut.com"
+strengths = "Xóa nền, auto caption, hiệu ứng, template; nhập .srt."
+tips = "Dựng theo animatic + SRT do kit xuất ra."

@@ -13,6 +13,9 @@ mà bạn lặp lại được.
 | 5 | `07` thương mại | Quảng cáo sản phẩm thật: brief → 3 biến thể hook | **Đúng brief**: nhận brief ngẫu nhiên, nộp trong 90 phút | 3 biến thể quảng cáo + bảng so sánh |
 | 6 | `08` AI Yourself · `04` workflow | Digital twin của bạn và một video talking-head dùng twin | **Clone có chủ đích**: clone 1 video viral, đổi người, sản phẩm và ngôn ngữ | Video cá nhân hóa + case study |
 
+**Song song từ tuần 3:** học `12` (17 hiệu ứng: mỗi tuần dựng lại 3 hiệu ứng), `13` (viết mọi kịch bản bằng
+`script.vs`), `14` (generate đa model, giọng ElevenLabs, animatic, xuất sang tool dựng).
+
 ## Bốn game rèn kỹ năng (lặp lại bất cứ lúc nào)
 
 1. **Kể chuyện trong 3 khung.** Chỉ được dùng 3 ảnh để kể mở đầu, biến cố và kết. Không được nói chữ

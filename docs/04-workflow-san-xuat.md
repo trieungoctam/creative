@@ -14,7 +14,9 @@
 projects/<ten-du-an>/
   BRIEF.md          Mục tiêu của BẠN: sản phẩm, khách, nền tảng, CTA, ngân sách, điều bắt buộc
   TREATMENT.md      Đáp án sáng tạo: premise, hook, nhịp, nhân vật, thế giới, các hệ thống hình/âm
-  STORYBOARD.md     Kịch bản chính thức + bảng shot
+  script.vs         Kịch bản chính thức, neo theo từ (docs/13)
+  production.toml   Shot, take A-roll, giọng, nhạc, SFX gắn vào vùng nghĩa của kịch bản (docs/14)
+  STORYBOARD.md     Ghi chú dàn cảnh (storyboard hình: storyboard.py board → storyboard.html)
   PROGRESS.md       Đang làm gì, còn gì, bước tiếp theo (để phiên sau làm tiếp được)
   references/<ref>/ source.mp4 · transcript.json · ANALYSIS.md · TIMELINE.md · evidence/
   prompts/          Mỗi lần generate một file: prompt, tham chiếu, model, kết quả, điểm
@@ -51,10 +53,12 @@ Viết bằng ngôn ngữ đạo diễn, không ghi tên tool:
 - Những hệ thống hình/âm **thật sự cần** (đừng thêm hiệu ứng vì nó có sẵn).
 - Ảnh nào làm **neo danh tính và nhất quán**.
 
-## Bước 3 · STORYBOARD
+## Bước 3 · Kịch bản + storyboard
 
-Kịch bản là bản chính thức duy nhất. Mỗi shot gồm: lời thoại, hình, chữ/MG, âm thanh, thời lượng,
-và **quan hệ sinh** (text / khung đầu–cuối / tham chiếu). Mẫu ở `templates/STORYBOARD.md`.
+Viết lời vào `script.vs` và đánh dấu vùng nghĩa `@{ten}…@{/ten}` ở chỗ hình hoặc âm phải bám theo (docs/13).
+Mỗi shot trong `production.toml` gồm: `during` (vùng nghĩa), lớp/khung, model, prompt, tham chiếu và
+**quan hệ sinh** (text / khung đầu–cuối / tham chiếu). Sau đó chạy `storyboard.py board` để xem
+storyboard và `storyboard.py animatic` để duyệt nhịp *trước khi* tốn tiền generate.
 
 ## Bước 4 · Ảnh chủ lực (hero)
 
@@ -62,15 +66,18 @@ Làm **một khung đẹp nhất** trước. Nó định nghĩa người, thế 
 theo vòng (xem `02`), chấm bằng thang 14 điểm, chốt vào `assets/`. Mọi cảnh sau phát triển từ hero
 (xem cây tham chiếu ở `05`).
 
-## Bước 5 · Phát triển concept và chuyển động
+## Bước 5 · Phát triển concept, chuyển động và giọng
 
 1. Từ hero, sinh các **góc nhìn khác** của cùng thế giới: cận, toàn, góc ngược, sản phẩm trên tay.
 2. Với từng shot, chọn quan hệ sinh video, viết prompt theo `03`, ước lượng thời lượng.
-3. Generate 2–4 take mỗi shot, chọn take tốt nhất. Lưu cả take hỏng để biết model hay sai ở đâu.
+3. Generate 2–4 take mỗi shot (`vgen run --model a,b -n 2`), chọn take tốt nhất (`vgen pick`). Lưu cả
+   take hỏng để biết model hay sai ở đâu.
+4. Giọng đọc, SFX, nhạc bằng ElevenLabs (`vaudio`). Rồi `vscript align` để mọi thứ bám mốc thật.
 
 ## Bước 6 · Dựng hậu kỳ
 
-Phần quyết định chất lượng. Xem `06-hau-ky.md`. Thứ tự: ráp A-roll theo nhịp lời → cắt khoảng lặng →
+Phần quyết định chất lượng. Xem `06-hau-ky.md`. Xuất timeline sang tool bạn dùng bằng
+`storyboard.py export --to xml|srt|csv|hf|json` (docs/14). Thứ tự: ráp A-roll theo nhịp lời → cắt khoảng lặng →
 B-roll phủ ý → phụ đề → MG gắn với từ khóa → nhạc và SFX → màu → xuất.
 
 ## Bước 7 · QC và xuất bản

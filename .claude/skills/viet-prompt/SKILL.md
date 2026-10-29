@@ -23,7 +23,15 @@ Dự án có CHARACTER/TREATMENT thì đọc trước để giữ nhất quán.
 3. Hành động bám vào cảnh có thật. Con số, chữ, biểu đồ để MG lo. Tránh ẩn dụ dễ bị hiểu theo nghĩa đen.
 4. Bảng đầu vào theo `templates/PROMPT-VIDEO.md`, ước lượng thời lượng từ lời thoại.
 
+## Chọn model (docs/14)
+Ghi **model logic** vào shot trong `production.toml`: `gpt-image` (hero, casting), `gpt-image-edit` /
+`nano-banana-edit` (giữ danh tính, cầm sản phẩm), `nano-banana` (B-roll, chữ trên ảnh), `seedance`
+(talking-head có thoại: `image = "shot:hero"`, `dialogue = "<segment>"`), `kling` (chuyển động máy),
+`veo` (điện ảnh). Kit ưu tiên nhà cung cấp chính chủ (OpenAI, BytePlus) trước fal.ai.
+Muốn so sánh thì đề xuất `vgen run --model a,b -n 2` (chạy thử trước, `--yes` khi người dùng duyệt chi phí).
+
 ## Luôn kèm
 - **Kế hoạch biến thể**: mỗi vòng chỉ đổi một biến (người → cú máy → thế giới → chi tiết).
 - **Tiêu chí chấm** (thang 14 điểm ở `docs/01`) và các lỗi cần soi riêng với loại shot này.
-- Lưu vào `projects/<ten>/prompts/<shot>-v<n>.md` theo template.
+- Ghi prompt vào shot tương ứng trong `production.toml`, rồi `vgen cards` để sinh thẻ prompt
+  `prompts/<shot>.md` (dùng được cho cả app thủ công như Higgsfield hay Midjourney).

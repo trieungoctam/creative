@@ -1,0 +1,90 @@
+# production.toml — bản đồ sản xuất của một video.
+# Kịch bản (script.vs) giữ LỜI và các vùng nghĩa @{...}. File này giữ mọi thứ GẮN vào kịch bản:
+# take A-roll của từng Segment, và các shot (B-roll, overlay, ảnh hero...) bám theo Selection.
+#
+#   vscript.py align script.vs --media hook=... → timing.json   (mốc thật sau khi có A-roll)
+#   vgen.py cards / run production.toml                         (prompt + generate nhiều model, ưu tiên chính chủ)
+#   vaudio.py tts / sfx / music production.toml                 (ElevenLabs: giọng đọc có mốc từng từ, SFX, nhạc)
+#   storyboard.py board / animatic / export production.toml     (storyboard, dựng thô, xuất sang tool edit)
+
+[project]
+name = "ten-du-an"
+script = "script.vs"
+width = 1080
+height = 1920
+fps = 30
+lang = "vi"            # vi | en  (ước lượng thời lượng khi chưa có A-roll)
+accent = "#FFE14D"
+
+# A-roll: file video (quay thật hoặc generate) cho từng Segment, theo thứ tự trong kịch bản.
+# Chưa có thì để trống — storyboard/animatic sẽ ước lượng thời gian theo số chữ.
+[takes]
+# hook = "assets/aroll/hook.mp4"
+# body = "assets/aroll/body.mp4"
+# all = "assets/aroll/full.mp4"   # hoặc một video duy nhất chứa cả kịch bản
+
+# ---------------------------------------------------------------- âm thanh (ElevenLabs)
+[audio]
+tts_model = "eleven_v4"     # tiếng Việt: eleven_v4 / eleven_v3 / eleven_flash_v2_5 (KHÔNG dùng multilingual_v2)
+vo_dir = "assets/vo"        # Segment không có video sẽ dùng giọng đọc ở đây
+
+[voices]
+# HOST = "<voice_id>"       # vaudio.py voices  ·  vaudio.py design --role HOST --description "..."
+
+[music]
+# prompt = "Warm lo-fi pop, 100 BPM, soft guitar and keys, no vocals"
+# file = "assets/music/bed.mp3"   # hoặc nhạc có sẵn có license
+# gain = 0.18                     # tự hạ (duck) khi có giọng
+
+# [[sfx]]
+# id = "reveal"
+# at = "moment:reveal"            # Moment, Selection (đầu khoảng), "segment:x" hoặc số giây
+# text = "Single soft glass ding, short tail, close mic"
+# duration = 1.0
+# file = "assets/sfx/reveal.mp3"
+# gain = 0.6
+
+# ---------------------------------------------------------------- shot
+# model = model LOGIC trong config/models.toml [prefer]: gpt-image, gpt-image-edit, seedance, kling, veo, nano-banana...
+#         vgen tự chọn tuyến chính chủ có key (OpenAI, BytePlus) trước tuyến fal.ai
+# Mỗi shot gắn vào kịch bản qua `during`:
+#   during = "ten-selection"          một Selection @{ten}...@{/ten}
+#   during = "segment:hook"           cả một Segment
+#   during = "moment:reveal+1.5"      từ Moment, kéo dài 1.5s
+# layer   = "aroll" | "broll" (phủ toàn khung, giữ tiếng A-roll) | "overlay" (khung nhỏ) | "ref" (chỉ là ảnh tham chiếu)
+# frame   = full | upper | lower | center | card-left | card-right | phone
+# kind    = image | video
+# model   = model logic hoặc tuyến cụ thể ; thử nhiều model cùng lúc: vgen run --model gpt-image,nano-banana
+# image   = khung đầu (đường dẫn hoặc "shot:<id>") · end_image = khung cuối · refs = ảnh tham chiếu
+# dialogue = "<segment>"  → tự chèn lời thoại có vai của Segment vào prompt video
+# asset   = file đã CHỐT (vgen pick sẽ chép ứng viên được chọn vào đây)
+
+[[shot]]
+id = "hero"
+layer = "ref"
+kind = "image"
+model = "gpt-image"
+aspect = "9:16"
+asset = "assets/hero.png"
+prompt = """
+Vertical 9:16 frame from an iPhone front-camera video, natural available light, true-to-life skin
+texture, slight handheld framing, no studio lighting, no cinematic bokeh.
+
+PERSON: ...
+
+SHOT: ... face points straight toward the lens, no head tilt or rotation ...
+
+SETTING: ...
+"""
+
+[[shot]]
+id = "proof-broll"
+during = "proof"
+layer = "broll"
+frame = "lower"
+kind = "image"
+model = "nano-banana"
+aspect = "4:3"
+asset = "assets/broll/vi-du.png"
+motion = "pop"
+prompt = """..."""

@@ -1,0 +1,11 @@
+kind,name,start,end
+segment,hook,0.000,3.189
+selection,pain,0.667,1.778
+moment,reveal,2.594,2.594
+selection,proof,3.489,6.156
+segment,body,3.489,6.306
+segment,cta,6.606,8.756
+shot-broll,pain-closeup,0.667,1.778
+shot-overlay,proof-card,3.489,6.156
+sfx,reveal-ding,2.594,2.594
+sfx,card-whoosh,3.489,3.489

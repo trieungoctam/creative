@@ -1,0 +1,116 @@
+# Dự án mẫu: quảng cáo UGC serum vitamin C 15s (chưa có ảnh/video thật — dùng để thử pipeline).
+[project]
+name = "demo-serum"
+script = "script.vs"
+width = 1080
+height = 1920
+fps = 30
+lang = "vi"
+accent = "#FFE14D"
+
+[takes]
+# hook = "assets/aroll/hook.mp4"      # video A-roll (quay thật hoặc generate) cho từng Segment
+
+# Âm thanh — ElevenLabs (vaudio.py). Video A-roll có tiếng thì giọng lấy từ video;
+# Segment nào không có video sẽ dùng giọng đọc assets/vo/<segment>.mp3 nếu có.
+[audio]
+tts_model = "eleven_v4"          # có tiếng Việt; eleven_multilingual_v2 thì KHÔNG
+vo_dir = "assets/vo"
+
+[voices]
+# HOST = "<voice_id>"            # vaudio.py voices · hoặc vaudio.py design --role HOST ...
+
+[music]
+prompt = "Bright lo-fi pop bed, 100 BPM, soft plucked guitar and warm keys, light shaker, optimistic morning mood, no vocals"
+file = "assets/music/bed.mp3"
+gain = 0.18                      # âm lượng nền; tự duck khi có giọng
+instrumental = true
+
+[[sfx]]
+id = "reveal-ding"
+at = "moment:reveal"
+text = "Single soft glass ding, bright and clean, short tail, close mic"
+duration = 1.0
+file = "assets/sfx/reveal-ding.mp3"
+gain = 0.6
+
+[[sfx]]
+id = "card-whoosh"
+at = "proof"                     # đầu Selection proof
+text = "Quick soft paper whoosh swipe, dry, close"
+duration = 0.6
+file = "assets/sfx/card-whoosh.mp3"
+gain = 0.5
+
+[[shot]]
+id = "hero"
+layer = "ref"
+kind = "image"
+model = "gpt-image"
+aspect = "9:16"
+asset = "assets/hero.png"
+prompt = """
+Vertical 9:16 frame from an iPhone front-camera video, natural available light, true-to-life skin
+texture with visible pores, slight handheld framing, no studio lighting, no cinematic bokeh.
+
+PERSON: A Vietnamese girl in her mid twenties, strikingly beautiful with the fresh, approachable
+presence of a top V-pop idol; glossy shoulder-length black hair tucked behind one ear, dewy skin,
+small gold hoops; very broad shoulders and excellent head-to-shoulder proportions.
+
+SHOT: Close half-body view, she speaks to the camera like telling a close friend a secret, one hand
+gesturing; face points straight toward the lens, no head tilt or rotation; sits slightly right,
+a bathroom shelf on the left leaves room for a product card.
+
+SETTING: A small Saigon apartment bathroom in the morning: terracotta tiles, a round mirror, a few
+skincare bottles and a green potted pothos; warm terracotta and leaf-green palette.
+"""
+
+[[shot]]
+id = "aroll-hook"
+during = "segment:hook"
+layer = "aroll"
+kind = "video"
+model = "seedance"
+image = "shot:hero"
+dialogue = "hook"
+aspect = "9:16"
+resolution = "720p"
+asset = "assets/aroll/hook.mp4"
+prompt = """
+She is confiding in a close friend, half-annoyed, half-amused at how her skin still looks dull.
+On "dù đã skincare đủ bước" she lifts her eyebrows in disbelief; she lands "bước này" with a
+knowing look into the lens. Fixed eye-level camera, framing as in the image; jump cut at the pause.
+No on-screen text, no outfit change.
+"""
+
+[[shot]]
+id = "pain-closeup"
+during = "pain"
+layer = "broll"
+frame = "full"
+kind = "image"
+model = "nano-banana"
+aspect = "9:16"
+asset = "assets/broll/pain.png"
+motion = "kenburns"
+prompt = """
+Extreme macro phone photo of a cheek with dull, uneven skin tone under flat bathroom light,
+five skincare bottles blurred in the background, honest and unretouched, no text.
+"""
+
+[[shot]]
+id = "proof-card"
+during = "proof"
+layer = "overlay"
+frame = "card-left"
+kind = "image"
+model = "gpt-image-edit"
+refs = ["assets/product.png"]
+aspect = "4:3"
+asset = "assets/broll/proof.png"
+motion = "pop"
+prompt = """
+Image 1 is the product: keep the exact bottle shape, label and cap colour. Show it on a sunlit
+bathroom shelf next to a small day-1 / day-3 split photo of the same cheek, clearly brighter on
+day 3. Clean, honest UGC style, no extra text.
+"""

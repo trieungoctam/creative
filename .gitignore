@@ -13,3 +13,8 @@
 # projects/
 __pycache__/
 .DS_Store
+
+# Ứng viên generate (chốt bằng vgen pick vào assets/)
+**/assets/gen/
+# Bản xuất HyperFrames chứa bản sao media
+**/output/hyperframes/assets/

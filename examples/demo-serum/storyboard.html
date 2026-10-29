@@ -1,0 +1,52 @@
+<!doctype html><html lang='vi'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Storyboard · demo-serum</title><style>
+:root{--bg:#f6f4ef;--fg:#1d1d1f;--mut:#6b6b70;--card:#fff;--line:#e4e0d8;--acc:#FFE14D}
+@media (prefers-color-scheme:dark){:root{--bg:#141416;--fg:#ececee;--mut:#9a9aa2;--card:#1f1f23;--line:#2d2d33}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 Inter,system-ui,sans-serif}
+main{max-width:1180px;margin:0 auto;padding:24px 16px 80px}h1{margin:0 0 4px;font-size:26px}
+.meta{color:var(--mut);margin-bottom:18px}.warn{background:#fff3c4;color:#5a4300;padding:8px 12px;border-radius:8px;margin:10px 0}
+section{margin-top:28px}h2{font-size:18px;margin:0 0 8px;display:flex;gap:10px;align-items:baseline}h2 small{color:var(--mut);font-weight:400}
+.script{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:17px;line-height:2}
+.w{border-radius:4px;padding:1px 0}.sel{background:color-mix(in srgb,var(--acc) 30%,transparent);box-shadow:inset 0 -2px var(--acc)}
+.cue{color:var(--line);padding:0 4px}.tag{font-size:11px;background:var(--acc);color:#111;border-radius:4px;padding:0 5px;margin:0 2px;vertical-align:2px}
+.mom{color:#e0443e;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.thumb{aspect-ratio:9/16;background:repeating-linear-gradient(45deg,var(--line) 0 10px,transparent 10px 20px);display:flex;align-items:center;justify-content:center;color:var(--mut);position:relative}
+.thumb img,.thumb video{width:100%;height:100%;object-fit:cover}.thumb .badge{position:absolute;left:8px;top:8px;background:#000a;color:#fff;font-size:12px;border-radius:99px;padding:2px 8px}
+.body{padding:10px 12px}.id{font-weight:700}.small{color:var(--mut);font-size:13px}
+details{margin-top:6px}summary{cursor:pointer;color:var(--mut);font-size:13px}pre{white-space:pre-wrap;font-size:12px;margin:6px 0 0}
+.cands{display:flex;gap:4px;margin-top:6px;overflow-x:auto}.cands img,.cands video{height:56px;border-radius:4px}
+</style></head><body><main>
+<h1>demo-serum</h1><div class='meta'>1080×1920 · 30fps · 8.8s · 4 shot · kịch bản <code>script.vs</code></div>
+<div class='warn'>Mốc thời gian đang là <b>ước lượng</b> theo tốc độ nói. Sau khi có A-roll, chạy <code>vscript.py align</code> để storyboard bám mốc thật.</div>
+<section><h2>hook <small>0.00–3.19s</small></h2><div class='script'><span class="w" title="0.00–0.22s">Da</span> <span class="w" title="0.22–0.44s">xỉn</span> <span class="w" title="0.44–0.67s">màu</span> <span class="tag">pain</span><span class="w sel" title="0.67–0.89s">dù</span> <span class="w sel" title="0.89–1.11s">đã</span> <span class="w sel" title="1.11–1.33s">skincare</span> <span class="w sel" title="1.33–1.56s">đủ</span> <span class="w sel" title="1.56–1.78s">bước?</span> <span class="cue">||</span><span class="w" title="1.93–2.15s">Lỗi</span> <span class="w" title="2.15–2.37s">nằm</span> <span class="w" title="2.37–2.59s">ở</span> <span class="mom" title="Moment">◆reveal</span> <span class="w" title="2.59–2.82s">bước</span> <span class="w" title="2.82–3.04s">này.</span> </div><div class='grid'>
+<div class='card'><div class='thumb'>chưa có hình<span class='badge'>aroll · 0.00–3.19s</span></div><div class='body'><div class='id'>aroll-hook</div><div class='small'>seedance · video · cần tạo</div><div class='small'>“Da xỉn màu dù đã skincare đủ bước? Lỗi nằm ở bước này.”</div><details><summary>prompt</summary><pre>She is confiding in a close friend, half-annoyed, half-amused at how her skin still looks dull.
+On &quot;dù đã skincare đủ bước&quot; she lifts her eyebrows in disbelief; she lands &quot;bước này&quot; with a
+knowing look into the lens. Fixed eye-level camera, framing as in the image; jump cut at the pause.
+No on-screen text, no outfit change.</pre></details></div></div>
+<div class='card'><div class='thumb'>chưa có hình<span class='badge'>broll · 0.67–1.78s</span></div><div class='body'><div class='id'>pain-closeup</div><div class='small'>nano-banana · image · full · cần tạo</div><div class='small'>“dù đã skincare đủ bước?”</div><details><summary>prompt</summary><pre>Extreme macro phone photo of a cheek with dull, uneven skin tone under flat bathroom light,
+five skincare bottles blurred in the background, honest and unretouched, no text.</pre></details></div></div>
+</div></section>
+<section><h2>body <small>3.49–6.31s</small></h2><div class='script'><span class="tag">proof</span><span class="w sel" title="3.49–3.71s">Serum</span> <span class="w sel" title="3.71–3.93s">vitamin</span> <span class="w sel" title="3.93–4.16s">C</span> <span class="w sel" title="4.16–4.38s">15%</span> <span class="cue">||</span><span class="w sel" title="4.38–4.60s">dùng</span> <span class="w sel" title="4.60–4.82s">ba</span> <span class="w sel" title="4.82–5.04s">ngày</span> <span class="cue">||</span><span class="w sel" title="5.04–5.27s">là</span> <span class="w sel" title="5.27–5.49s">thấy</span> <span class="w sel" title="5.49–5.71s">da</span> <span class="w sel" title="5.71–5.93s">sáng</span> <span class="w sel" title="5.93–6.16s">lên.</span> </div><div class='grid'>
+<div class='card'><div class='thumb'>chưa có hình<span class='badge'>overlay · 3.49–6.16s</span></div><div class='body'><div class='id'>proof-card</div><div class='small'>gpt-image-edit · image · card-left · cần tạo</div><div class='small'>“Serum vitamin C 15% dùng ba ngày là thấy da sáng lên.”</div><details><summary>prompt</summary><pre>Image 1 is the product: keep the exact bottle shape, label and cap colour. Show it on a sunlit
+bathroom shelf next to a small day-1 / day-3 split photo of the same cheek, clearly brighter on
+day 3. Clean, honest UGC style, no extra text.</pre></details></div></div>
+</div></section>
+<section><h2>cta <small>6.61–8.76s</small></h2><div class='script'><span class="w" title="6.61–6.83s">Bấm</span> <span class="w" title="6.83–7.05s">giỏ</span> <span class="w" title="7.05–7.27s">hàng</span> <span class="cue">||</span><span class="w" title="7.27–7.72s · đọc: tíc tóc">TikTok</span> <span class="w" title="7.72–7.94s">Shop</span> <span class="w" title="7.94–8.16s">đang</span> <span class="w" title="8.16–8.38s">giảm</span> <span class="w" title="8.38–8.61s">30%.</span> </div><div class='grid'>
+</div></section>
+<section><h2>Tài sản tham chiếu <small>không gắn thời gian</small></h2><div class='grid'>
+<div class='card'><div class='thumb'>chưa có hình<span class='badge'>ref · —</span></div><div class='body'><div class='id'>hero</div><div class='small'>gpt-image · image · cần tạo</div><details><summary>prompt</summary><pre>Vertical 9:16 frame from an iPhone front-camera video, natural available light, true-to-life skin
+texture with visible pores, slight handheld framing, no studio lighting, no cinematic bokeh.
+
+PERSON: A Vietnamese girl in her mid twenties, strikingly beautiful with the fresh, approachable
+presence of a top V-pop idol; glossy shoulder-length black hair tucked behind one ear, dewy skin,
+small gold hoops; very broad shoulders and excellent head-to-shoulder proportions.
+
+SHOT: Close half-body view, she speaks to the camera like telling a close friend a secret, one hand
+gesturing; face points straight toward the lens, no head tilt or rotation; sits slightly right,
+a bathroom shelf on the left leaves room for a product card.
+
+SETTING: A small Saigon apartment bathroom in the morning: terracotta tiles, a round mirror, a few
+skincare bottles and a green potted pothos; warm terracotta and leaf-green palette.</pre></details></div></div>
+</div></section>
+</main></body></html>

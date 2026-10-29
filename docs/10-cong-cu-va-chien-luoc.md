@@ -9,10 +9,10 @@ Chi tiết tầng dựng (hypit, HyperFrames, Remotion, Higgsfield) xem ở `11-
 | Tìm video tham chiếu | TikTok Creative Center, FastMoss, Kalodata, Meta Ad Library | Lưu link vào `references/` |
 | Tải + mổ xẻ | `vkit fetch/analyze/tile` (yt-dlp + ffmpeg + faster-whisper) | Miễn phí, chạy local |
 | Kịch bản, phân tích | Claude (skill `/giai-phau-video`, `/len-brief`) | |
-| Ảnh hero/nhân vật | GPT Image 2, Nano Banana Pro, Seedream, Flux | Xem `02` |
-| Video từ ảnh/tham chiếu | Seedance 2 Mini/2.5, Kling 3/4, Veo 3.1, Wan; gom qua Higgsfield/HypiHub | Xem `03` |
+| Ảnh hero/nhân vật | **OpenAI gpt-image-2.5** (chính chủ), Nano Banana Pro, Seedream, Flux | Xem `02`, `14` |
+| Video từ ảnh/tham chiếu | **Seedance 2.0 qua BytePlus** (chính chủ), Kling O3, Veo 3.1, Wan; gom qua Higgsfield/fal | Xem `03`, `14` |
 | Avatar nói / UGC | HeyGen, TopView, Arcads, Creatify, MakeUGC, varg | Xem bảng giá bên dưới |
-| Giọng | ElevenLabs, MiniMax, Fish Audio | Kiểm tra tiếng Việt kỹ |
+| Giọng, SFX, nhạc | **ElevenLabs** (eleven_v4 có tiếng Việt; multilingual_v2 thì không), MiniMax, Fish Audio | `vaudio.py` |
 | Lớp đồ họa, phụ đề | HyperFrames, Remotion, CapCut, Premiere/After Effects | |
 | Xuất bản | `vkit finish`; TikTok Content Posting API (Phase 2) | |
 

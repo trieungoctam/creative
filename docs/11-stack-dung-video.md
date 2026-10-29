@@ -28,6 +28,9 @@ Xây SẢN PHẨM/SaaS render video cho khách hàng?
        ⚠ không dùng hypit làm backend đa người thuê nếu chưa có license thương mại
 ```
 
+Lưu ý (10/2026): **OpenAI đã tắt Sora 2 / Videos API từ 24/09/2026.** Video chính chủ chất lượng cao nên
+đi qua Seedance (BytePlus ModelArk), Kling, Veo (docs/14).
+
 **Combo khuyến nghị cho bạn:** Higgsfield (hoặc API) sinh A-roll/B-roll → HyperFrames làm phụ đề và MG →
 `vkit finish` xuất bản. Thêm hypit khi cần clone theo lô.
 

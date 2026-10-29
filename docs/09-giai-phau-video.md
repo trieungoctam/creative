@@ -85,4 +85,6 @@ Cho mỗi quan hệ quan trọng, hỏi: **giữ, đổi hay bỏ** khi đổi n
 ## Ví dụ đã làm
 
 `examples/tenfoldmarc-17-effects/` là ca mổ xẻ đầy đủ reel "17 video effects claude can create" của
-@tenfoldmarc, gồm ANALYSIS.md và TIMELINE.md.
+@tenfoldmarc, gồm ANALYSIS.md, TIMELINE.md và `reel.vs`: chính reel đó viết lại thành kịch bản neo theo từ
+(docs/13). `vscript align` với transcript của reel cho lại đúng các mốc 0,68 · 1,64 · 2,56s… như khi soi
+khung hình. Thư viện 17 hiệu ứng mổ từng khung nằm ở `docs/12`.

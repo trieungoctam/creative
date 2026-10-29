@@ -81,7 +81,7 @@ def font_file() -> str:
 
 
 # ---------------------------------------------------------------- new
-PROJECT_FILES = ["BRIEF.md", "TREATMENT.md", "STORYBOARD.md"]
+PROJECT_FILES = ["BRIEF.md", "TREATMENT.md", "STORYBOARD.md", "script.vs", "production.toml"]
 
 
 def cmd_new(a: argparse.Namespace) -> None:
@@ -93,6 +93,8 @@ def cmd_new(a: argparse.Namespace) -> None:
         (proj / d).mkdir(parents=True)
     for f in PROJECT_FILES:
         shutil.copy(root / "templates" / f, proj / f)
+    prod = proj / "production.toml"
+    prod.write_text(prod.read_text().replace('name = "ten-du-an"', f'name = "{a.name}"'))
     (proj / "PROGRESS.md").write_text(
         f"# PROGRESS · {a.name}\n\n- Đang làm: viết BRIEF\n- Còn lại: tham chiếu, TREATMENT, "
         "STORYBOARD, hero, chuyển động, dựng, QC\n- Bước tiếp theo: \n")
