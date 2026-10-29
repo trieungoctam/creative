@@ -1,0 +1,80 @@
+{
+  "name": "listicle-17-effects",
+  "title_number": 17,
+  "title": "video effects",
+  "title_line2": "claude can create",
+  "accent": "#FFE14D",
+  "aroll": "assets/aroll.mp4",
+  "last_hold": 0.8,
+  "items": [
+    {
+      "label": "orbit",
+      "demo": "assets/demo-01.jpg"
+    },
+    {
+      "label": "couch wall",
+      "demo": "assets/demo-02.jpg"
+    },
+    {
+      "label": "ui world",
+      "demo": "assets/demo-03.jpg"
+    },
+    {
+      "label": "frame break",
+      "demo": "assets/demo-04.jpg"
+    },
+    {
+      "label": "digital zoom",
+      "demo": "assets/demo-05.jpg"
+    },
+    {
+      "label": "phone mockup",
+      "demo": "assets/demo-06.jpg"
+    },
+    {
+      "label": "checklist",
+      "demo": "assets/demo-07.jpg"
+    },
+    {
+      "label": "headline wall",
+      "demo": "assets/demo-08.jpg"
+    },
+    {
+      "label": "zoom-through cut",
+      "demo": "assets/demo-09.jpg"
+    },
+    {
+      "label": "chart grow",
+      "demo": "assets/demo-10.jpg"
+    },
+    {
+      "label": "pull-back reveal",
+      "demo": "assets/demo-11.jpg"
+    },
+    {
+      "label": "green screen",
+      "demo": "assets/demo-12.jpg"
+    },
+    {
+      "label": "paper cut",
+      "demo": "assets/demo-13.jpg"
+    },
+    {
+      "label": "doodle boil",
+      "demo": "assets/demo-14.jpg",
+      "match": "doodle"
+    },
+    {
+      "label": "vertigo",
+      "demo": "assets/demo-15.jpg"
+    },
+    {
+      "label": "cover story",
+      "demo": "assets/demo-16.jpg"
+    },
+    {
+      "label": "glass type",
+      "demo": "assets/demo-17.jpg"
+    }
+  ]
+}

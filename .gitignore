@@ -1,0 +1,15 @@
+# Media: video tham chiếu và thành phẩm không đưa vào git
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.m4a
+*.mp3
+*.wav
+*.info.json
+# Bằng chứng phân tích (ảnh trích từ video người khác)
+**/evidence/
+# Dự án cá nhân: bỏ comment dòng dưới nếu muốn giữ riêng
+# projects/
+__pycache__/
+.DS_Store
